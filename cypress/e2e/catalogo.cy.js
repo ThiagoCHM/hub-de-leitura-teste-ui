@@ -38,5 +38,33 @@ describe('Funcionalidade: Catálogo de livros', () => {
         cy.get('#add-to-cart-btn').click()
         cy.get('#alert-container').should('contain', 'Livro adicionado à cesta com sucesso!')
     });
-    
+
+    it('Deve clicar em um botão Adicionar à cesta de forma Randômica', () => {
+        cy.get('.btn-primary').its('length').then((totalDeBotoes) => {
+            // Gera um Índice Aleatório
+            const indiceAleatorio = Math.floor(Math.random() * totalDeBotoes);
+            // Clica no Botão correspondente ao Índice Sorteado
+            cy.get('.btn-primary').eq(indiceAleatorio).click();
+        });
+    });
+
+    ity('Deve clicar em dois botões Adicionar à cesta de forma Randômica', () => {
+        cy.get('.btn-primary').its('length').then((totalDeBotoes) => {
+            // Garante que existem pelo menos 2 botões na tela para o teste fazer sentido
+            expect(totalDeBotoes).to.be.greaterThan(1);
+            // 1. Sorteia e clica no primeiro botão
+            const primeiroIndice = Math.floor(Math.random() * totalDeBotoes);
+            cy.log(`Primeiro botão selecionado: índice ${primeiroIndice}`);
+            cy.get('.btn-primary').eq(primeiroIndice).click();
+            // 2. Sorteia o segundo índice e garante que ele seja DIFERENTE do primeiro
+            let segundoIndice = Math.floor(Math.random() * totalDeBotoes);
+            while (segundoIndice === primeiroIndice) {
+                segundoIndice = Math.floor(Math.random() * totalDeBotoes);
+            }
+            // 3. Clica no segundo botão
+            cy.log(`Segundo botão selecionado: índice ${segundoIndice}`);
+            cy.get('.btn-primary').eq(segundoIndice).click();
+        });
+    });
+
 });

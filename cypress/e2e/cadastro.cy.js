@@ -13,8 +13,8 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     });
 
     it('Deve fazer cadastro com sucesso, usando função JS', () => {
-        let email = `teste${Date.now()}@teste.com`
-        cy.get('#name').type('Fabio Araujo')
+        const email = `teste${Date.now()}@teste.com`
+        cy.get('#name').type('Thiago C. H. Moreira')
         cy.get('#email').type(email)
         cy.get('#phone').type('11987654321')
         cy.get('#password').type('Teste@123')
@@ -25,9 +25,10 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     });
 
     it('Deve fazer cadastro com sucesso, usando Faker', () => {
-        let nome = faker.person.fullName()
-        let email = faker.internet.email()
-        cy.get('#name').type(nome)
+        const firstName = faker.person.firstName();
+        const lastName = faker.person.lastName();
+        const email = faker.internet.email({ firstName, lastName }).toLowerCase();
+        cy.get('#name').type(`${firstName} ${lastName}`)
         cy.get('#email').type(email)
         cy.get('#phone').type('11987654321')
         cy.get('#password').type('Teste@123')
@@ -35,24 +36,24 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
         cy.get('#terms-agreement').check()
         cy.get('#register-btn').click()
         cy.url().should('include', 'dashboard')
-        cy.get('#user-name').should('contain', nome)
+        cy.get('#user-name').should('contain', `${firstName} ${lastName}`)
     });
 
     it('Deve preencher cadastro com sucesso - Usando comando customizado', () => {
-        let email = `teste${Date.now()}@teste.com`
-        let nome = faker.person.fullName({ sex: 'male' })
+        const email = `teste${Date.now()}@teste.com`
+        const nome = faker.person.fullName({ sex: 'male' })
         cy.preencherCadastro(nome ,email, '1198765432165', 'Teste@123', 'Teste@123')
         cy.url().should('include', 'dashboard')
     }); 
     
     it('Deve fazer cadastro com sucesso - Usando Page Objects', () => {
-        let email = `teste${Date.now()}@teste.com`
-        cadastroPage.preencherCadastro('Fabio Araújo', email, '11987654321', 'senha123', 'senha123')
+        const email = `teste${Date.now()}@teste.com`
+        cadastroPage.preencherCadastro('Thiago C. H. Moreira', email, '11987654321', 'Teste@123', 'Teste@123')
         cy.url().should('include', 'dashboard')
     });
 
     it('Deve validar mensagem ao tentar cadastrar sem preencher nome', () => {
-        cadastroPage.preencherCadastro('', 'fabio@teste.com', '11987654321', 'senha123', 'senha123')
+        cadastroPage.preencherCadastro('', 'thiago@teste.com', '11987654321', 'Teste@123', 'Teste@123')
         cy.get(':nth-child(1) > .invalid-feedback').should('contain', 'Nome deve ter pelo menos 2 caracteres')
     });
 

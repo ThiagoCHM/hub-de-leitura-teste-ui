@@ -67,4 +67,27 @@ describe('Funcionalidade: Catálogo de livros', () => {
         });
     });
 
+    it('Deve clicar em um livro aleatório, acessar os detalhes e adicionar à cesta', () => {
+        // Seletor que mapeia todos os títulos de livros da página
+        const seletorTitulos = '.text-dark';
+        cy.get(seletorTitulos).its('length').then((totalDeLivros) => {
+            // Sorteia um índice dinâmico
+            const indiceAleatorio = Math.floor(Math.random() * totalDeLivros);
+            // Captura o elemento do livro sorteado (Corrigido: sem a barra invertida)
+            cy.get(seletorTitulos).eq(indiceAleatorio).then(($livroSorteado) => {
+                const nomeDoLivro = $livroSorteado.text().trim();
+                cy.log(`Livro sorteado da vez: ${nomeDoLivro}`);
+                // Clica no livro selecionado
+                cy.wrap($livroSorteado).click();
+                // Validação exata da URL usando o seu padrão com Query Parameter (?id=)
+                cy.url().should('include', 'book-details.html?id=');
+                // Garante que o título do livro sorteado está visível na página de detalhes
+                cy.get('h1').should('contain', nomeDoLivro);
+                // Finaliza o fluxo adicionando ao carrinho
+                cy.get('#add-to-cart-btn').click();
+                cy.get('#alert-container').should('contain', 'Livro adicionado à cesta com sucesso!');
+            });
+    });
+});
+
 });

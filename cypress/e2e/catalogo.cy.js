@@ -48,7 +48,7 @@ describe('Funcionalidade: Catálogo de livros', () => {
         });
     });
 
-    ity('Deve clicar em dois botões Adicionar à cesta de forma Randômica', () => {
+    it('Deve clicar em dois botões Adicionar à cesta de forma Randômica', () => {
         cy.get('.btn-primary').its('length').then((totalDeBotoes) => {
             // Garante que existem pelo menos 2 botões na tela para o teste fazer sentido
             expect(totalDeBotoes).to.be.greaterThan(1);

@@ -7,8 +7,8 @@ describe("Funcionalidade: Contato", () => {
   });
 
   it("Deve preencher formulário de contato com sucesso", () => {
-    cy.get('#name').type('Fabio Araújo')
-    cy.get('#email').type('fabio@teste.com')
+    cy.get('#name').type('Thiago C. H. Moreira')
+    cy.get('#email').type('thiago@teste.com')
     cy.get('#subject').select('Parcerias')
     cy.get('#message').type('Mensagem de teste')
     cy.get('#btn-submit').click()
@@ -18,7 +18,7 @@ describe("Funcionalidade: Contato", () => {
 
   it("Deve validar mensagem de erro ao enviar sem preencher nome", () => {
     cy.get('#name').clear()
-    cy.get('#email').type('fabio@teste.com')
+    cy.get('#email').type('thiago@teste.com')
     cy.get('#subject').select('Parcerias')
     cy.get('#message').type('Mensagem de teste')
     cy.get('#btn-submit').click()
@@ -27,7 +27,7 @@ describe("Funcionalidade: Contato", () => {
   });
 
   it("Deve validar mensagem de erro ao enviar sem preencher email", () => {
-    cy.get('#name').type('Fábio')
+    cy.get('#name').type('Thiago C. H. Moreira')
     cy.get('#email').clear()
     cy.get('#subject').select('Parcerias')
     cy.get('#message').type('Mensagem de teste')
@@ -37,8 +37,8 @@ describe("Funcionalidade: Contato", () => {
   });
 
   it("Deve validar mensagem de erro ao enviar sem selecionar o assunto", () => {
-    cy.get('#name').type('Fábio')
-    cy.get('#email').type('teste@teste')
+    cy.get('#name').type('Thiago C. H. Moreira')
+    cy.get('#email').type('thiago@teste.com')
     cy.get('#message').type('Mensagem de teste')
     cy.get('#btn-submit').click()
     //Resultado esperado
@@ -46,8 +46,8 @@ describe("Funcionalidade: Contato", () => {
   });
 
   it("Deve validar mensagem de erro ao enviar sem preencher a mensagem", () => {
-    cy.get('#name').type('Fábio')
-    cy.get('#email').type('teste@teste.com')
+    cy.get('#name').type('Thiago C. H. Moreira')
+    cy.get('#email').type('thiago@teste.com')
     cy.get('#subject').select('Parcerias')
     cy.get('#message').clear()
     cy.get('#btn-submit').click()
